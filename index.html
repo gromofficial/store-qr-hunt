@@ -521,12 +521,25 @@ const scanCtx = scanCanvas.getContext('2d', {willReadFrequently:true});
 async function startCamera(){
   document.getElementById('camError').style.display='none';
   try{
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      throw new Error('Browser-ul nu suportă accesul la cameră (necesită HTTPS).');
+    }
     stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}, audio:false});
     video.srcObject = stream;
     await video.play();
     scanLoop();
   }catch(e){
-    document.getElementById('camError').style.display='flex';
+    console.error('Camera error:', e.name, e.message);
+    const errEl = document.getElementById('camError');
+    const errMsg = errEl.querySelector('p');
+    if(e.name === 'NotAllowedError'){
+      errMsg.textContent = 'Accesul la cameră a fost blocat. Apasă pe iconița de lacăt din bara de adrese → permite Camera, apoi reîncarcă pagina.';
+    } else if(e.name === 'NotFoundError'){
+      errMsg.textContent = 'Nu s-a găsit nicio cameră pe acest dispozitiv.';
+    } else {
+      errMsg.textContent = e.message || 'Camera nu poate fi accesată. Poți scana codurile QR direct cu aplicația de cameră a telefonului — linkul te aduce înapoi aici cu punctul adăugat.';
+    }
+    errEl.style.display='flex';
   }
 }
 function stopCamera(){
