@@ -4,213 +4,235 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-<title>QR Hunt — Store Launch</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0A0A0A">
+<title>ONZE — Code Hunt</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-31 -2 160 160'><rect x='-31' y='-2' width='160' height='160' fill='%238A1538'/><g fill='%23fff'><path d='m31.38 36.73c0-6.05 4.69-9.46 9.6-9.37h0.53v-21.56h-2.15v-2.86c0-0.73 0.44-1.53 0.89-1.61h-19.84c-6.79 0-10.52 3.77-11.16 8.75v133c-0.13 4.71-4.81 8.44-7.15 9.24h35.12c-2.3-1.17-5.89-3.78-5.89-9.19l0.05-106.4z'/><path d='m68.84 36.73c0-5.32-4.28-9.47-9.7-9.37h-0.63v-21.56h2.5v-2.6c0-0.88-0.49-1.61-0.84-1.87h19.75c6.7 0 10.35 4.16 10.35 9.14v132.6c0.13 4.37 3.91 7.76 7.51 9.24h-35.26c3.73-1.92 6.27-5.09 6.27-9.2l0.05-106.4z'/></g></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;590;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* iOS system palette — light */
-    --bg:#F2F2F7;
-    --card:#FFFFFF;
-    --fill:rgba(120,120,128,.12);
-    --fill-2:rgba(120,120,128,.08);
-    --label:#000000;
-    --label-2:rgba(60,60,67,.60);
-    --label-3:rgba(60,60,67,.30);
-    --separator:rgba(60,60,67,.18);
-    --accent:#007AFF;
-    --accent-2:#5E5CE6;
-    --green:#34C759;
-    --red:#FF3B30;
-    --card-shadow:0 1px 2px rgba(0,0,0,.04), 0 10px 34px rgba(0,0,0,.05);
-    --bar-bg:rgba(242,242,247,.82);
-    --ease:cubic-bezier(.32,.72,0,1);
-    --font:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --bg:#000000;
-      --card:#1C1C1E;
-      --fill:rgba(120,120,128,.36);
-      --fill-2:rgba(120,120,128,.20);
-      --label:#FFFFFF;
-      --label-2:rgba(235,235,245,.60);
-      --label-3:rgba(235,235,245,.30);
-      --separator:rgba(84,84,88,.65);
-      --accent:#0A84FF;
-      --accent-2:#5E5CE6;
-      --green:#30D158;
-      --red:#FF453A;
-      --card-shadow:none;
-      --bar-bg:rgba(0,0,0,.8);
-    }
+    --bg:#0A0A0A;
+    --surface:#141414;
+    --surface-2:#1A1A1A;
+    --border:rgba(255,255,255,.10);
+    --border-strong:rgba(255,255,255,.20);
+    --text:#F0EDE8;
+    --text-2:rgba(255,255,255,.48);
+    --text-3:rgba(255,255,255,.20);
+    /* burgundy: --accent pentru suprafețe pline, --accent-hi pentru
+       linii subțiri și text, unde burgundy-ul închis s-ar pierde pe negru */
+    --accent:#8A1538;
+    --accent-hi:#C2295A;
+    --accent-soft:rgba(194,41,90,.18);
+    --green:#00C767;
+    --green-soft:rgba(0,199,103,.15);
+    --red:#FF6B5A;
+    --ease:cubic-bezier(.16,1,.3,1);
+    --font:'Space Grotesk',system-ui,-apple-system,sans-serif;
   }
 
-  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; margin:0; padding:0;}
   html,body{margin:0; padding:0;}
   body{
-    background:var(--bg); color:var(--label); font-family:var(--font);
+    background:var(--bg); color:var(--text); font-family:var(--font);
     -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    letter-spacing:-.01em; overscroll-behavior-y:none;
+    overscroll-behavior-y:none;
   }
-  button{font-family:inherit;}
+  button{font-family:inherit; cursor:pointer;}
 
   .screen{display:none; min-height:100dvh; flex-direction:column;}
   .screen.active{display:flex;}
   .scroll{flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch;
-    padding:calc(env(safe-area-inset-top) + 14px) 20px 132px;}
+    padding:calc(env(safe-area-inset-top) + 16px) 20px 140px;}
+
+  /* ---------- ONZE logo ---------- */
+  .logo{display:flex; justify-content:center; margin-bottom:34px;}
+  .logo-mark{width:auto; height:88px; color:var(--text); display:block;}
+  .logo-sm .logo-mark{height:46px;}
 
   /* ---------- typography ---------- */
-  .eyebrow{font-size:13px; font-weight:590; letter-spacing:.02em; color:var(--label-2); text-transform:uppercase;}
-  .large-title{font-size:34px; line-height:1.11; font-weight:700; letter-spacing:-.028em; margin:4px 0 0;}
-  .body-2{font-size:15px; line-height:1.4; color:var(--label-2); margin:8px 0 0; letter-spacing:-.012em;}
+  .eyebrow{font-size:11px; font-weight:700; letter-spacing:.18em; color:var(--text-2); text-transform:uppercase;}
+  .large-title{font-size:38px; line-height:1.05; font-weight:700; letter-spacing:-.04em; margin:6px 0 0; color:var(--text);}
+  .body-2{font-size:14px; line-height:1.5; color:var(--text-2); margin:10px 0 0; letter-spacing:-.01em;}
 
-  /* ---------- cards ---------- */
-  .card{background:var(--card); border-radius:22px; box-shadow:var(--card-shadow);}
-
-  /* ---------- ring ---------- */
-  .ring-card{margin-top:22px; padding:26px 20px 24px; display:flex; flex-direction:column; align-items:center;}
-  .ring-wrap{position:relative; width:216px; height:216px;}
-  .ring-wrap svg{position:absolute; inset:0; transform:rotate(-90deg);}
-  .ring-track{fill:none; stroke:var(--fill); stroke-width:17;}
-  .ring-prog{fill:none; stroke:url(#ringGrad); stroke-width:17; stroke-linecap:round;
-    stroke-dasharray:565.487; stroke-dashoffset:565.487;
-    transition:stroke-dashoffset 1s var(--ease);}
-  .ring-center{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;}
-  .ring-num{font-size:68px; font-weight:700; letter-spacing:-.045em; line-height:1; font-variant-numeric:tabular-nums;}
-  .ring-of{font-size:15px; font-weight:590; color:var(--label-2); margin-top:6px; letter-spacing:-.01em;}
-  .ring-status{margin-top:20px; font-size:15px; font-weight:590; color:var(--label-2); letter-spacing:-.012em; text-align:center;}
+  /* ---------- progress section ---------- */
+  .progress-card{margin-top:28px; padding:32px 24px 28px; border:1px solid var(--border);
+    background:var(--surface); display:flex; flex-direction:column; align-items:center;}
+  .progress-num{font-size:96px; font-weight:700; letter-spacing:-.06em; line-height:1;
+    font-variant-numeric:tabular-nums; color:var(--text);}
+  .progress-of{font-size:14px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--text-2); margin-top:4px;}
+  .progress-bar-wrap{width:100%; height:3px; background:var(--border); margin-top:24px; position:relative;}
+  .progress-bar-fill{position:absolute; left:0; top:0; bottom:0; width:0%;
+    background:var(--accent-hi); transition:width .8s var(--ease);}
+  .progress-status{margin-top:16px; font-size:13px; font-weight:500; color:var(--text-2);
+    letter-spacing:.01em; text-align:center;}
 
   /* ---------- tiles ---------- */
-  .tiles{display:grid; grid-template-columns:repeat(5,1fr); gap:9px; margin-top:16px;}
-  .tile{aspect-ratio:1; border-radius:16px; background:var(--card); box-shadow:var(--card-shadow);
-    display:flex; align-items:center; justify-content:center; color:var(--label-2);
-    font-size:15px; font-weight:600; font-variant-numeric:tabular-nums;
-    transition:transform .5s var(--ease), background .45s var(--ease), color .45s var(--ease);}
-  .tile svg{width:22px; height:22px; opacity:0; transform:scale(.4); transition:all .5s var(--ease);}
-  .tile.on{background:linear-gradient(160deg,var(--accent),var(--accent-2)); color:#fff;}
+  .tiles{display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:20px;}
+  .tile{aspect-ratio:1; border:1px solid var(--border); background:var(--surface);
+    display:flex; align-items:center; justify-content:center; color:var(--text-2);
+    font-size:15px; font-weight:700; font-variant-numeric:tabular-nums;
+    letter-spacing:-.01em;
+    transition:all .3s var(--ease);}
+  .tile svg{width:22px; height:22px; opacity:0; transform:scale(.4); transition:all .35s var(--ease);}
+  .tile.on{background:var(--accent); border-color:var(--accent); color:#fff;}
   .tile.on .num{display:none;}
   .tile.on svg{opacity:1; transform:scale(1);}
-  .tile.pop{animation:tilepop .6s var(--ease);}
-  @keyframes tilepop{0%{transform:scale(1)}35%{transform:scale(1.18)}100%{transform:scale(1)}}
+  .tile.pop{animation:tilepop .45s var(--ease);}
+  @keyframes tilepop{0%{transform:scale(1)}30%{transform:scale(1.14)}100%{transform:scale(1)}}
 
   /* ---------- info list ---------- */
-  .list{margin-top:16px; overflow:hidden;}
-  .row{display:flex; gap:13px; align-items:flex-start; padding:15px 17px;}
-  .row + .row{border-top:.5px solid var(--separator);}
-  .row .idx{flex:none; width:26px; height:26px; border-radius:50%; background:var(--fill-2);
-    color:var(--label-2); font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center;}
-  .row p{margin:3px 0 0; font-size:15px; line-height:1.35; letter-spacing:-.012em;}
-  .row p b{font-weight:600;}
+  .list{margin-top:20px; border:1px solid var(--border); background:var(--surface); overflow:hidden;}
+  .row{display:flex; gap:14px; align-items:flex-start; padding:16px 18px;}
+  .row + .row{border-top:1px solid var(--border);}
+  .row .idx{flex:none; width:24px; height:24px;
+    color:var(--text-3); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--border);}
+  .row p{margin:2px 0 0; font-size:14px; line-height:1.4; color:var(--text-2); letter-spacing:-.01em;}
+  .row p b{font-weight:700; color:var(--text);}
 
   /* ---------- bottom bar ---------- */
   .bar{position:fixed; left:0; right:0; bottom:0; z-index:20;
-    padding:14px 20px calc(14px + env(safe-area-inset-bottom));
-    background:var(--bar-bg); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%);
-    border-top:.5px solid var(--separator);}
-  .btn{width:100%; border:none; cursor:pointer; border-radius:15px; padding:16px 20px;
-    font-size:17px; font-weight:600; letter-spacing:-.02em; display:flex; align-items:center; justify-content:center; gap:9px;
-    transition:transform .25s var(--ease), opacity .2s ease;}
-  .btn:active{transform:scale(.975); opacity:.9;}
+    padding:16px 20px calc(16px + env(safe-area-inset-bottom));
+    background:rgba(10,10,10,.88); backdrop-filter:blur(24px) saturate(150%); -webkit-backdrop-filter:blur(24px) saturate(150%);
+    border-top:1px solid var(--border);}
+  .btn{width:100%; border:none; padding:17px 20px;
+    font-size:16px; font-weight:700; letter-spacing:.02em; text-transform:uppercase;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    transition:transform .2s var(--ease), opacity .15s ease;}
+  .btn:active{transform:scale(.98); opacity:.85;}
   .btn-primary{background:var(--accent); color:#fff;}
-  .btn-plain{background:transparent; color:var(--accent);}
-  .btn svg{width:20px; height:20px;}
-  .bar-note{text-align:center; font-size:13px; color:var(--label-2); margin:10px 0 0; letter-spacing:-.008em;}
+  .btn-plain{background:transparent; color:var(--accent-hi); border:1px solid var(--accent-hi);}
+  .btn svg{width:18px; height:18px;}
+  .bar-note{text-align:center; font-size:12px; color:var(--text-3); margin:10px 0 0; letter-spacing:.01em;}
 
-  /* ---------- scanner ---------- */
-  #scanScreen{background:#000; position:relative; overflow:hidden;}
-  #video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
-  .scan-ui{position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center;}
-  .finder{width:min(70vw,272px); aspect-ratio:1; position:relative; box-shadow:0 0 0 100vmax rgba(0,0,0,.5); border-radius:28px;}
-  .finder i{position:absolute; width:34px; height:34px; border:3.5px solid #fff; border-radius:12px 0 0 0;}
-  .finder i:nth-child(1){top:-2px; left:-2px; border-right:0; border-bottom:0;}
-  .finder i:nth-child(2){top:-2px; right:-2px; border-left:0; border-bottom:0; border-radius:0 12px 0 0;}
-  .finder i:nth-child(3){bottom:-2px; left:-2px; border-right:0; border-top:0; border-radius:0 0 0 12px;}
-  .finder i:nth-child(4){bottom:-2px; right:-2px; border-left:0; border-top:0; border-radius:0 0 12px 0;}
-  .scan-hint{margin-top:30px; color:#fff; font-size:15px; font-weight:500; letter-spacing:-.01em;
-    background:rgba(0,0,0,.4); backdrop-filter:blur(14px); padding:10px 18px; border-radius:999px;}
-  .scan-close{position:absolute; z-index:3; top:calc(env(safe-area-inset-top) + 14px); right:16px;
-    width:38px; height:38px; border-radius:50%; border:none; cursor:pointer; color:#fff; font-size:17px;
-    background:rgba(60,60,67,.6); backdrop-filter:blur(16px); display:flex; align-items:center; justify-content:center;}
-  .cam-error{position:absolute; inset:0; z-index:4; display:none; flex-direction:column; align-items:center; justify-content:center;
-    background:var(--bg); color:var(--label); padding:32px; text-align:center;}
-  .cam-error .glyph{width:64px; height:64px; border-radius:50%; background:var(--fill-2); display:flex; align-items:center; justify-content:center; margin-bottom:18px;}
-  .cam-error h3{font-size:22px; font-weight:700; letter-spacing:-.022em; margin:0 0 8px;}
-  .cam-error p{font-size:15px; line-height:1.45; color:var(--label-2); max-width:300px; margin:0 0 24px;}
+  /* ---------- code entry modal ---------- */
+  #codeModal{position:fixed; left:0; right:0; top:0; height:100dvh; z-index:50;
+    display:none; flex-direction:column; align-items:center; justify-content:flex-end;
+    background:rgba(0,0,0,.0);}
+  #codeModal.show{display:flex; animation:modalBgIn .3s ease forwards;}
+  #codeModal.hide{animation:modalBgOut .25s ease forwards;}
+  @keyframes modalBgIn{to{background:rgba(0,0,0,.6);}}
+  @keyframes modalBgOut{from{background:rgba(0,0,0,.6);}to{background:rgba(0,0,0,.0);}}
+
+  .modal-sheet{width:100%; max-width:480px; background:var(--surface); border-top:1px solid var(--border-strong);
+    padding:16px 24px calc(32px + env(safe-area-inset-bottom)); position:relative;
+    transform:translateY(100%); transition:transform .4s var(--ease);}
+  #codeModal.show .modal-sheet{transform:translateY(0);}
+  #codeModal.hide .modal-sheet{transform:translateY(100%); transition:transform .25s ease;}
+
+  .modal-handle{width:32px; height:3px; background:var(--border-strong); margin:0 auto 24px;}
+  .modal-close{position:absolute; top:14px; right:14px; width:38px; height:38px;
+    display:flex; align-items:center; justify-content:center;
+    background:transparent; border:1px solid var(--border); color:var(--text-2);
+    transition:color .2s ease, border-color .2s ease, transform .2s var(--ease);}
+  .modal-close svg{width:16px; height:16px;}
+  .modal-close:active{transform:scale(.92); color:var(--text); border-color:var(--border-strong);}
+  .modal-title{font-size:20px; font-weight:700; letter-spacing:-.02em; text-align:center; margin:0 0 4px;}
+  .modal-sub{font-size:13px; color:var(--text-2); text-align:center; margin:0 0 28px; letter-spacing:.01em;}
+
+  .digit-row{display:flex; justify-content:center; gap:10px; margin-bottom:16px;}
+
+  .modal-msg{min-height:20px; margin-bottom:12px; text-align:center;
+    font-size:13px; font-weight:600; letter-spacing:.01em; color:transparent;
+    transition:color .2s ease;}
+  .modal-msg.err{color:var(--red);}
+  .modal-msg.warn{color:#FF9F0A;}
+  .digit-box{width:72px; height:88px; border:2px solid var(--border-strong);
+    background:var(--bg); font-size:36px; font-weight:700; font-family:var(--font);
+    color:var(--text); text-align:center; caret-color:var(--accent-hi);
+    outline:none; -webkit-appearance:none; appearance:none;
+    transition:border-color .2s ease, box-shadow .2s ease;
+    font-variant-numeric:tabular-nums; letter-spacing:-.02em;
+    -moz-appearance:textfield;}
+  .digit-box::-webkit-outer-spin-button,
+  .digit-box::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
+  .digit-box:focus{border-color:var(--accent-hi); box-shadow:0 0 0 3px var(--accent-soft);}
+  .digit-box.error{border-color:var(--red); box-shadow:0 0 0 3px rgba(255,23,68,.15); animation:shake .4s linear;}
+  .digit-box.success{border-color:var(--green); box-shadow:0 0 0 3px var(--green-soft);}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+
+  .modal-verify{width:100%; border:none; padding:17px;
+    font-size:15px; font-weight:700; font-family:var(--font); letter-spacing:.04em; text-transform:uppercase;
+    background:var(--accent); color:#fff; opacity:.35; pointer-events:none;
+    transition:opacity .2s ease, transform .2s var(--ease);}
+  .modal-verify.ready{opacity:1; pointer-events:auto;}
+  .modal-verify:active{transform:scale(.98);}
 
   /* ---------- +1 overlay ---------- */
   #flash{position:fixed; inset:0; z-index:60; display:none; flex-direction:column; align-items:center; justify-content:center;
-    background:rgba(242,242,247,.72); backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%);}
-  @media (prefers-color-scheme: dark){ #flash{background:rgba(0,0,0,.66);} }
-  #flash.show{display:flex; animation:fade .25s ease;}
-  @keyframes fade{from{opacity:0}to{opacity:1}}
-  .check-badge{width:108px; height:108px; border-radius:50%; background:linear-gradient(160deg,var(--accent),var(--accent-2));
-    display:flex; align-items:center; justify-content:center; color:#fff; animation:spring .62s var(--ease);
-    box-shadow:0 18px 44px rgba(0,122,255,.32);}
-  .check-badge svg{width:52px; height:52px;}
-  @keyframes spring{0%{transform:scale(.4); opacity:0}55%{transform:scale(1.1)}100%{transform:scale(1); opacity:1}}
-  .flash-title{font-size:28px; font-weight:700; letter-spacing:-.026em; margin-top:24px;}
-  .flash-sub{font-size:16px; color:var(--label-2); margin-top:6px; font-weight:500; letter-spacing:-.012em;}
+    background:rgba(10,10,10,.85); backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px);}
+  #flash.show{display:flex; animation:fadeIn .2s ease;}
+  #flash.out{animation:fadeOut .35s ease forwards;}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes fadeOut{from{opacity:1}to{opacity:0}}
+  .check-badge{width:100px; height:100px; background:var(--accent);
+    display:flex; align-items:center; justify-content:center; color:#fff;
+    animation:badgeIn .4s var(--ease);}
+  .check-badge svg{width:48px; height:48px;}
+  @keyframes badgeIn{0%{transform:scale(.3); opacity:0}100%{transform:scale(1); opacity:1}}
+  .flash-title{font-size:28px; font-weight:700; letter-spacing:-.03em; margin-top:24px;}
+  .flash-sub{font-size:14px; color:var(--text-2); margin-top:8px; font-weight:500; letter-spacing:.01em;}
 
   /* ---------- prize ---------- */
-  .hero-badge{width:76px; height:76px; border-radius:50%; background:linear-gradient(160deg,var(--accent),var(--accent-2));
+  .hero-badge{width:72px; height:72px; background:var(--accent);
     display:flex; align-items:center; justify-content:center; color:#fff; margin:12px auto 0;
-    box-shadow:0 14px 36px rgba(0,122,255,.3); animation:spring .7s var(--ease);}
-  .hero-badge svg{width:38px; height:38px;}
-  .prize-head{text-align:center; margin-top:18px;}
-  .prize-head h1{font-size:34px; font-weight:700; letter-spacing:-.03em; margin:0;}
-  .prize-head p{font-size:16px; color:var(--label-2); margin:9px auto 0; max-width:290px; line-height:1.4; letter-spacing:-.012em;}
+    animation:badgeIn .5s var(--ease);}
+  .hero-badge svg{width:36px; height:36px;}
+  .prize-head{text-align:center; margin-top:22px;}
+  .prize-head h1{font-size:34px; font-weight:700; letter-spacing:-.04em; margin:0;}
+  .prize-head p{font-size:14px; color:var(--text-2); margin:10px auto 0; max-width:280px; line-height:1.45;}
 
-  .pass{margin-top:24px; border-radius:24px; padding:24px 22px 22px; color:#fff; position:relative; overflow:hidden;
-    background:linear-gradient(150deg,#0A84FF,#5E5CE6 65%,#7B4CE6);
-    box-shadow:0 12px 40px rgba(10,132,255,.28);}
-  .pass::after{content:''; position:absolute; top:-40%; left:-30%; width:60%; height:180%;
-    background:linear-gradient(100deg,transparent,rgba(255,255,255,.16),transparent); transform:rotate(8deg); animation:sheen 3.4s ease-in-out infinite;}
-  @keyframes sheen{0%{left:-40%}55%,100%{left:120%}}
+  .pass{margin-top:28px; padding:28px 24px 22px; color:#fff; position:relative; overflow:hidden;
+    background:var(--accent); border:none;}
+  .pass::after{content:''; position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+    animation:sheen 4s ease-in-out infinite;}
+  @keyframes sheen{0%{left:-60%}50%,100%{left:120%}}
   .pass-top{display:flex; align-items:center; justify-content:space-between; position:relative; z-index:1;}
-  .pass-count{font-size:42px; font-weight:700; letter-spacing:-.03em; line-height:1; font-variant-numeric:tabular-nums;}
-  .pass-count span{font-size:22px; opacity:.7;}
-  .live{display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.2); backdrop-filter:blur(10px);
-    padding:5px 10px; border-radius:999px; font-size:11px; font-weight:700; letter-spacing:.06em;}
-  .live i{width:6px; height:6px; border-radius:50%; background:#fff; animation:blink 1.1s ease-in-out infinite;}
+  .pass-count{font-size:44px; font-weight:700; letter-spacing:-.03em; line-height:1; font-variant-numeric:tabular-nums;}
+  .pass-count span{font-size:22px; opacity:.65;}
+  .live{display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.18);
+    padding:5px 10px; font-size:11px; font-weight:700; letter-spacing:.1em;}
+  .live i{width:5px; height:5px; background:#fff; animation:blink 1.1s ease-in-out infinite;}
   @keyframes blink{50%{opacity:.2}}
-  /* dovada pentru casier: toate cele 10 pătrate pline */
   .proof-tiles{position:relative; z-index:1; display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:20px;}
-  .proof-tile{aspect-ratio:1; border-radius:14px; background:rgba(255,255,255,.24); display:flex; align-items:center; justify-content:center; color:#fff;}
-  .proof-tile svg{width:58%; height:58%;}
-  .pass-divider{height:.5px; background:rgba(255,255,255,.28); margin:20px 0 14px; position:relative; z-index:1;}
+  .proof-tile{aspect-ratio:1; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; color:#fff;}
+  .proof-tile svg{width:55%; height:55%;}
+  .pass-divider{height:1px; background:rgba(255,255,255,.22); margin:20px 0 16px; position:relative; z-index:1;}
   .pass-meta{display:flex; align-items:baseline; justify-content:space-between; position:relative; z-index:1;}
-  .pass-meta .k{font-size:12px; font-weight:600; opacity:.8; letter-spacing:.01em;}
-  .pass-clock{font-size:19px; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:.01em;}
-  .pass-note{font-size:13px; color:var(--label-2); text-align:center; margin:14px auto 0; max-width:300px; line-height:1.4;}
-  .banner{display:none; margin-top:18px; padding:14px 16px; border-radius:16px; font-size:14px; line-height:1.4;
-    background:rgba(255,159,10,.14); border:.5px solid rgba(255,159,10,.38);}
+  .pass-meta .k{font-size:11px; font-weight:700; opacity:.75; letter-spacing:.06em; text-transform:uppercase;}
+  .pass-clock{font-size:18px; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:.03em;}
+  .pass-note{font-size:12px; color:var(--text-3); text-align:center; margin:16px auto 0; max-width:300px; line-height:1.45; letter-spacing:.01em;}
+  .banner{display:none; margin-top:20px; padding:14px 16px; font-size:13px; line-height:1.45;
+    background:rgba(255,159,10,.08); border:1px solid rgba(255,159,10,.25); color:rgba(255,159,10,.85);}
   .banner.show{display:block;}
-  .banner b{font-weight:600;}
+  .banner b{font-weight:700; color:rgba(255,159,10,1);}
 
-  .hold{position:relative; overflow:hidden; background:var(--green); color:#fff;}
-  .hold .fill{position:absolute; left:0; top:0; bottom:0; width:0%; background:rgba(255,255,255,.28);}
-  .hold span{position:relative;}
+  .hold{position:relative; overflow:hidden; background:var(--green); color:#000;}
+  .hold .fill{position:absolute; left:0; top:0; bottom:0; width:0%; background:rgba(255,255,255,.3);}
+  .hold span{position:relative; font-weight:700;}
 
   /* ---------- done ---------- */
   #doneScreen .scroll{display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-bottom:40px;}
-  .done-badge{width:88px; height:88px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center;
-    color:#fff; animation:spring .7s var(--ease); box-shadow:0 14px 36px rgba(52,199,89,.3);}
-  .done-badge svg{width:44px; height:44px;}
-  #doneScreen h1{font-size:28px; font-weight:700; letter-spacing:-.026em; margin:24px 0 0;}
-  #doneScreen p{font-size:16px; color:var(--label-2); margin:10px auto 0; max-width:290px; line-height:1.45; letter-spacing:-.012em;}
+  .done-badge{width:80px; height:80px; background:var(--green);
+    display:flex; align-items:center; justify-content:center;
+    color:#000; animation:badgeIn .5s var(--ease);}
+  .done-badge svg{width:40px; height:40px;}
+  #doneScreen h1{font-size:28px; font-weight:700; letter-spacing:-.03em; margin:24px 0 0;}
+  #doneScreen p{font-size:14px; color:var(--text-2); margin:10px auto 0; max-width:280px; line-height:1.45;}
 
-  /* ---------- toast (dynamic-island style) ---------- */
-  .toast{position:fixed; z-index:70; top:calc(env(safe-area-inset-top) + 12px); left:50%;
-    transform:translateX(-50%) translateY(-140%) scale(.9);
-    background:rgba(28,28,30,.88); backdrop-filter:blur(20px) saturate(180%); color:#fff;
-    padding:13px 20px; border-radius:999px; font-size:15px; font-weight:500; letter-spacing:-.012em;
+  /* ---------- toast ---------- */
+  .toast{position:fixed; z-index:70; top:calc(env(safe-area-inset-top) + 14px); left:50%;
+    transform:translateX(-50%) translateY(-140%) scale(.95);
+    background:rgba(255,255,255,.10); backdrop-filter:blur(20px) saturate(150%); color:var(--text);
+    border:1px solid var(--border);
+    padding:13px 20px; font-size:14px; font-weight:600; letter-spacing:.01em;
     max-width:calc(100vw - 40px); text-align:center; opacity:0; pointer-events:none;
-    transition:transform .55s var(--ease), opacity .3s ease;}
+    transition:transform .45s var(--ease), opacity .25s ease;}
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0) scale(1);}
 </style>
 </head>
@@ -219,69 +241,69 @@
 <!-- ============ HOME ============ -->
 <div class="screen active" id="homeScreen">
   <div class="scroll">
-    <div class="eyebrow" id="brandName">STORE NAME</div>
-    <h1 class="large-title">Descoperă cele<br>10 modele</h1>
-    <p class="body-2">Fiecare model din mall are propriul cod QR. Scanează-l și primești un punct.</p>
-
-    <div class="banner" id="storageBanner">
-      <b>Navigare privată.</b> Punctele nu se salvează între scanări pe acest telefon — folosește butonul „Scanează cod QR" din aplicație, nu camera telefonului.
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 100 189" fill="currentColor" role="img" aria-label="ONZE">
+        <path d="m31.38 36.73c0-6.05 4.69-9.46 9.6-9.37h0.53v-21.56h-2.15v-2.86c0-0.73 0.44-1.53 0.89-1.61h-19.84c-6.79 0-10.52 3.77-11.16 8.75v133c-0.13 4.71-4.81 8.44-7.15 9.24h35.12c-2.3-1.17-5.89-3.78-5.89-9.19l0.05-106.4z"/>
+        <path d="m68.84 36.73c0-5.32-4.28-9.47-9.7-9.37h-0.63v-21.56h2.5v-2.6c0-0.88-0.49-1.61-0.84-1.87h19.75c6.7 0 10.35 4.16 10.35 9.14v132.6c0.13 4.37 3.91 7.76 7.51 9.24h-35.26c3.73-1.92 6.27-5.09 6.27-9.2l0.05-106.4z"/>
+        <path d="m15.77 160.3c8.19 1.13 11.32 7.87 11.32 13.02 0 6.8-3.6 13.81-12.16 13.81-8.17 0.56-13.32-4.66-13.32-14.14 0-5.88 3.95-13.61 14.16-12.69zm-0.58 5.91c-4.16-0.95-5.23 4.91-5.27 6.71-0.13 3.3 0.83 7.95 4.63 7.95 3.95 0 4.73-5.06 4.62-7.44-0.14-2.67-1.08-6.48-3.98-7.22z"/>
+        <path d="m29.7 160.4h6.79l9.99 13.59v-13.59h7.6v26.39h-7.76l-9.62-15v15h-7v-26.39z"/>
+        <path d="m57.21 160.4h18.59v5.03l-10.68 15.13h11.17v6.23h-19.05v-5.37l11.52-15.57h-11.55v-5.45z"/>
+        <path d="m78.96 160.4h18.01v5.67h-10.88v4.1h8.57v5.41h-8.57v4.73h10.77v6.48h-17.9v-26.39z"/>
+      </svg>
     </div>
 
-    <div class="card ring-card">
-      <div class="ring-wrap">
-        <svg viewBox="0 0 216 216">
-          <defs>
-            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#0A84FF"/><stop offset="1" stop-color="#5E5CE6"/>
-            </linearGradient>
-          </defs>
-          <circle class="ring-track" cx="108" cy="108" r="90"/>
-          <circle class="ring-prog" id="ringProg" cx="108" cy="108" r="90"/>
-        </svg>
-        <div class="ring-center">
-          <div class="ring-num" id="scoreNum">0</div>
-          <div class="ring-of">din 10 puncte</div>
-        </div>
+    <h1 class="large-title">Descoperă cele<br>5 modele</h1>
+    <p class="body-2">Fiecare model din Promenada Mall are un cod special de 4 cifre. Introdu-l și primești un punct.</p>
+
+    <div class="banner" id="storageBanner">
+      <b>Browserul blochează salvarea.</b> Ține pagina deschisă până la premiu — dacă o închizi, punctele se pierd.
+    </div>
+
+    <div class="progress-card">
+      <div class="progress-num" id="scoreNum">0</div>
+      <div class="progress-of">din 5 puncte</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressFill"></div>
       </div>
-      <div class="ring-status" id="ringStatus">Scanează primul cod pentru a începe</div>
+      <div class="progress-status" id="progressStatus">Introdu primul cod pentru a începe</div>
     </div>
 
     <div class="tiles" id="tiles"></div>
 
-    <div class="card list">
-      <div class="row"><div class="idx">1</div><p>Găsește un model în mall și scanează codul QR de lângă el.</p></div>
-      <div class="row"><div class="idx">2</div><p>Fiecare model îți dă <b>1 punct</b>. Sunt 10 modele în total.</p></div>
-      <div class="row"><div class="idx">3</div><p>La <b>10 puncte</b> arăți ecranul la casă și primești premiul.</p></div>
+    <div class="list">
+      <div class="row"><div class="idx">1</div><p>Găsește un model în <b>Promenada Mall</b> și caută codul de <b>4 cifre</b> de lângă el.</p></div>
+      <div class="row"><div class="idx">2</div><p>Fiecare model îți dă <b>1 punct</b>. Sunt 5 modele în total.</p></div>
+      <div class="row"><div class="idx">3</div><p>La <b>5 puncte</b> arăți ecranul la casă și primești premiul.</p></div>
     </div>
   </div>
 
   <div class="bar">
-    <button class="btn btn-primary" id="scanBtn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M7 12h10"/>
+    <button class="btn btn-primary" id="codeBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="6" width="20" height="12" rx="1"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/>
       </svg>
-      Scanează cod QR
+      Introdu codul
     </button>
   </div>
 </div>
 
-<!-- ============ SCANNER ============ -->
-<div class="screen" id="scanScreen">
-  <video id="video" playsinline muted></video>
-  <div class="scan-ui">
-    <div class="finder"><i></i><i></i><i></i><i></i></div>
-    <div class="scan-hint">Încadrează codul QR al modelului</div>
-  </div>
-  <button class="scan-close" id="scanClose" aria-label="Închide">✕</button>
-  <div class="cam-error" id="camError">
-    <div class="glyph">
-      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-        <path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/><path d="M2 2l20 20"/>
-      </svg>
+<!-- ============ CODE ENTRY MODAL ============ -->
+<div id="codeModal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <button class="modal-close" id="modalClose" aria-label="Închide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+    <div class="modal-title">Introdu codul</div>
+    <div class="modal-sub">Codul de 4 cifre de lângă model</div>
+    <div class="digit-row">
+      <input class="digit-box" id="d0" type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+      <input class="digit-box" id="d1" type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+      <input class="digit-box" id="d2" type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+      <input class="digit-box" id="d3" type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
     </div>
-    <h3>Camera nu e disponibilă</h3>
-    <p>Poți scana codul direct cu aplicația de cameră a telefonului — linkul te aduce înapoi aici cu punctul adăugat.</p>
-    <button class="btn btn-plain" id="camErrBack" style="max-width:220px">Înapoi</button>
+    <div class="modal-msg" id="modalMsg">&nbsp;</div>
+    <button class="modal-verify" id="verifyBtn">Verifică</button>
   </div>
 </div>
 
@@ -297,27 +319,37 @@
 <!-- ============ PRIZE ============ -->
 <div class="screen" id="prizeScreen">
   <div class="scroll">
+    <div class="logo logo-sm" style="margin-bottom:16px;">
+      <svg class="logo-mark" viewBox="0 0 100 189" fill="currentColor" role="img" aria-label="ONZE">
+        <path d="m31.38 36.73c0-6.05 4.69-9.46 9.6-9.37h0.53v-21.56h-2.15v-2.86c0-0.73 0.44-1.53 0.89-1.61h-19.84c-6.79 0-10.52 3.77-11.16 8.75v133c-0.13 4.71-4.81 8.44-7.15 9.24h35.12c-2.3-1.17-5.89-3.78-5.89-9.19l0.05-106.4z"/>
+        <path d="m68.84 36.73c0-5.32-4.28-9.47-9.7-9.37h-0.63v-21.56h2.5v-2.6c0-0.88-0.49-1.61-0.84-1.87h19.75c6.7 0 10.35 4.16 10.35 9.14v132.6c0.13 4.37 3.91 7.76 7.51 9.24h-35.26c3.73-1.92 6.27-5.09 6.27-9.2l0.05-106.4z"/>
+        <path d="m15.77 160.3c8.19 1.13 11.32 7.87 11.32 13.02 0 6.8-3.6 13.81-12.16 13.81-8.17 0.56-13.32-4.66-13.32-14.14 0-5.88 3.95-13.61 14.16-12.69zm-0.58 5.91c-4.16-0.95-5.23 4.91-5.27 6.71-0.13 3.3 0.83 7.95 4.63 7.95 3.95 0 4.73-5.06 4.62-7.44-0.14-2.67-1.08-6.48-3.98-7.22z"/>
+        <path d="m29.7 160.4h6.79l9.99 13.59v-13.59h7.6v26.39h-7.76l-9.62-15v15h-7v-26.39z"/>
+        <path d="m57.21 160.4h18.59v5.03l-10.68 15.13h11.17v6.23h-19.05v-5.37l11.52-15.57h-11.55v-5.45z"/>
+        <path d="m78.96 160.4h18.01v5.67h-10.88v4.1h8.57v5.41h-8.57v4.73h10.77v6.48h-17.9v-26.39z"/>
+      </svg>
+    </div>
     <div class="hero-badge">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"/></svg>
     </div>
     <div class="prize-head">
       <h1>Ai reușit</h1>
-      <p>Toate cele 10 modele descoperite. Arată acest ecran la casă pentru premiu.</p>
+      <p>Toate cele 5 modele descoperite. Arată acest ecran la casă pentru premiu.</p>
     </div>
 
     <div class="pass">
       <div class="pass-top">
-        <div class="pass-count">10<span>/10</span></div>
+        <div class="pass-count" id="passCount">5<span>/5</span></div>
         <div class="live"><i></i>LIVE</div>
       </div>
       <div class="proof-tiles" id="proofTiles"></div>
       <div class="pass-divider"></div>
       <div class="pass-meta">
-        <div class="k">Ecran live — nu captură de ecran</div>
+        <div class="k">Ecran live — nu captură</div>
         <div class="pass-clock" id="liveClock">--:--:--</div>
       </div>
     </div>
-    <p class="pass-note">Toate cele 10 pătrate sunt bifate. Ceasul se mișcă în timp real — pe un screenshot ar fi înghețat.</p>
+    <p class="pass-note">Toate pătratele sunt bifate. Ceasul se mișcă în timp real — pe un screenshot ar fi înghețat.</p>
   </div>
 
   <div class="bar">
@@ -334,64 +366,82 @@
     </div>
     <h1>Premiu ridicat</h1>
     <p id="doneInfo">Premiul a fost înmânat.</p>
-    <p>Mulțumim că ai fost alături de noi la deschidere.</p>
+    <p>Mulțumim că ai fost alături de noi.</p>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
 <script>
 /* ================= CONFIG ================= */
-const BRAND_NAME = 'STORE NAME';           // numele magazinului
-const TOTAL = 10;
-// Codurile secrete ale celor 10 modele — identice cu cele din qr-sheet.html
-const MODEL_CODES = [
-  'LX1-K7QP','LX2-M3ZR','LX3-T9VD','LX4-B6HN','LX5-W2SJ',
-  'LX6-F8CY','LX7-D4XA','LX8-P5EU','LX9-G1LT','LX10-N0RB'
-];
-// Cheia cu care personalul poate reseta un telefon (.../?reset=CHEIE). Schimb-o înainte de eveniment.
+const BRAND_NAME = 'ONZE';
+const TOTAL = 5;
+const MODEL_CODES = ['4829','7135','9261','3507','6843'];
 const RESET_KEY = 'grom2026';
 /* ========================================== */
 
-document.getElementById('brandName').textContent = BRAND_NAME;
+const LS_KEY = 'codehunt_v2';
 
-/* Sesiunea e strict locală, pe telefonul fiecărui vizitator (localStorage).
-   Nu există server și nicio stare comună — 30 sau 300 de oameni pot juca simultan,
-   fiecare cu propriile puncte, fără să se influențeze. */
-const LS_KEY = 'qrhunt_v1';
+/* Progresul se scrie în trei locuri deodată. La încărcare le citim pe toate
+   și reunim ce găsim, apoi scriem rezultatul înapoi în toate — așa un refresh
+   nu pierde nimic nici dacă browserul golește unul dintre straturi. */
+const layers = [
+  { get: ()=> localStorage.getItem(LS_KEY),
+    set: (v)=> localStorage.setItem(LS_KEY, v),
+    del: ()=> localStorage.removeItem(LS_KEY) },
 
-/* În navigarea privată localStorage poate arunca eroare: atunci ținem punctele
-   doar în memorie, care supraviețuiește cât timp pagina rămâne deschisă
-   (deci doar dacă scanează din aplicație, nu cu camera telefonului). */
-let storageOK = true;
-try{
-  localStorage.setItem('__qrhunt_probe','1');
-  localStorage.removeItem('__qrhunt_probe');
-}catch(e){ storageOK = false; }
+  { get: ()=> sessionStorage.getItem(LS_KEY),
+    set: (v)=> sessionStorage.setItem(LS_KEY, v),
+    del: ()=> sessionStorage.removeItem(LS_KEY) },
+
+  { get: ()=>{
+      const m = document.cookie.match(new RegExp('(?:^|; )'+LS_KEY+'=([^;]*)'));
+      return m ? decodeURIComponent(m[1]) : null;
+    },
+    set: (v)=>{ document.cookie = LS_KEY+'='+encodeURIComponent(v)+'; path=/; max-age=2592000; SameSite=Lax'; },
+    del: ()=>{ document.cookie = LS_KEY+'=; path=/; max-age=0; SameSite=Lax'; } }
+];
 
 function emptyState(){ return {collected:[], redeemed:false, redeemedAt:null}; }
-function loadState(){
-  try{
-    const s = JSON.parse(localStorage.getItem(LS_KEY));
-    if(s && Array.isArray(s.collected)) return {collected:s.collected, redeemed:!!s.redeemed, redeemedAt:s.redeemedAt||null};
-  }catch(e){}
-  return emptyState();
-}
-function saveState(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
-let state = loadState();
 
-const screens = {home:homeScreen, scan:scanScreen, prize:prizeScreen, done:doneScreen};
+function loadState(){
+  const merged = emptyState();
+  for(const l of layers){
+    let s;
+    try{ s = JSON.parse(l.get()); }catch(e){ continue; }
+    if(!s || !Array.isArray(s.collected)) continue;
+    for(const c of s.collected){
+      /* doar coduri valide, și fără dubluri între straturi */
+      if(MODEL_CODES.includes(c) && !merged.collected.includes(c)) merged.collected.push(c);
+    }
+    /* „premiu ridicat" nu se poate anula golind un singur strat */
+    if(s.redeemed){ merged.redeemed = true; merged.redeemedAt = merged.redeemedAt || s.redeemedAt || null; }
+  }
+  return merged;
+}
+
+function saveState(){
+  const raw = JSON.stringify(state);
+  let ok = false;
+  for(const l of layers){ try{ l.set(raw); ok = true; }catch(e){} }
+  return ok;
+}
+
+function clearState(){
+  for(const l of layers){ try{ l.del(); }catch(e){} }
+}
+
+let state = loadState();
+/* rescriem imediat: repară straturile golite și ne spune dacă măcar unul ține */
+let storageOK = saveState();
+
+const screens = {home:homeScreen, prize:prizeScreen, done:doneScreen};
 function show(name){
   for(const k in screens) screens[k].classList.toggle('active', k===name);
-  if(name!=='scan') stopCamera();
 }
 
-/* ---------- ring + tiles ---------- */
-const R = 90, CIRC = 2*Math.PI*R;   /* dash values sunt setate și în CSS, ca inelul să pornească gol */
-const ringProg = document.getElementById('ringProg');
-
+/* ---------- progress + tiles ---------- */
 const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"/></svg>';
 const tilesEl = document.getElementById('tiles');
 MODEL_CODES.forEach((c,i)=>{
@@ -404,9 +454,9 @@ MODEL_CODES.forEach((c,i)=>{
 function renderHome(){
   const n = state.collected.length, left = TOTAL - n;
   document.getElementById('scoreNum').textContent = n;
-  ringProg.style.strokeDashoffset = CIRC * (1 - n/TOTAL);
-  document.getElementById('ringStatus').textContent =
-    n===0 ? 'Scanează primul cod pentru a începe'
+  document.getElementById('progressFill').style.width = ((n/TOTAL)*100)+'%';
+  document.getElementById('progressStatus').textContent =
+    n===0 ? 'Introdu primul cod pentru a începe'
           : (left>0 ? ('Încă '+left+(left===1?' model':' modele')+' până la premiu') : 'Toate modelele descoperite');
   MODEL_CODES.forEach((c,i)=>{
     document.getElementById('tile'+i).classList.toggle('on', state.collected.includes(c));
@@ -420,15 +470,21 @@ function toast(msg){
 }
 
 /* ---------- core ---------- */
-function collect(code){
-  code = (code||'').trim().toUpperCase();
+function checkCode(code){
+  code = (code||'').trim();
   const idx = MODEL_CODES.indexOf(code);
-  if(idx === -1){ toast('Cod necunoscut — încearcă alt QR'); return false; }
-  if(state.collected.includes(code)){ toast('Ai scanat deja acest model'); return false; }
-  state.collected.push(code);
+  if(idx === -1) return {ok:false, reason:'unknown', msg:'Cod necunoscut — verifică cifrele'};
+  if(state.collected.includes(code)) return {ok:false, reason:'dup', msg:'Ai introdus deja acest cod'};
+  return {ok:true, code, idx};
+}
+
+function collect(code){
+  const r = checkCode(code);
+  if(!r.ok) return r;
+  state.collected.push(r.code);
   saveState();
-  flashPlusOne(idx);
-  return true;
+  flashPlusOne(r.idx);
+  return r;
 }
 
 function flashPlusOne(idx){
@@ -437,28 +493,130 @@ function flashPlusOne(idx){
   document.getElementById('flashTitle').textContent = 'Model '+String(idx+1).padStart(2,'0');
   document.getElementById('flashSub').textContent =
     left>0 ? ('+1 punct · încă '+left+(left===1?' model':' modele')) : '+1 punct · le ai pe toate';
+  f.classList.remove('out');
   f.classList.add('show');
   if(navigator.vibrate) navigator.vibrate(35);
+  setTimeout(()=> f.classList.add('out'), 1050);
   setTimeout(()=>{
-    f.classList.remove('show');
+    f.classList.remove('show','out');
     route();
     const tile = document.getElementById('tile'+idx);
-    if(tile){ tile.classList.add('pop'); setTimeout(()=>tile.classList.remove('pop'), 700); }
+    if(tile){ tile.classList.add('pop'); setTimeout(()=>tile.classList.remove('pop'), 500); }
     if(state.collected.length===TOTAL) celebrate();
-  }, 1500);
+  }, 1400);
 }
 
 function celebrate(){
   if(typeof confetti!=='function') return;
-  const colors = ['#0A84FF','#5E5CE6','#34C759','#FF9F0A','#FF375F'];
-  confetti({particleCount:110, spread:70, origin:{y:.4}, colors, scalar:.9});
-  setTimeout(()=>confetti({particleCount:70, angle:60, spread:60, origin:{x:0,y:.65}, colors, scalar:.9}), 320);
-  setTimeout(()=>confetti({particleCount:70, angle:120, spread:60, origin:{x:1,y:.65}, colors, scalar:.9}), 560);
+  const colors = ['#8A1538','#C2295A','#E8C46A','#FFFFFF','#5C0E26'];
+  confetti({particleCount:90, spread:65, origin:{y:.4}, colors, scalar:.9});
+  setTimeout(()=>confetti({particleCount:60, angle:60, spread:55, origin:{x:0,y:.65}, colors, scalar:.9}), 280);
+  setTimeout(()=>confetti({particleCount:60, angle:120, spread:55, origin:{x:1,y:.65}, colors, scalar:.9}), 500);
 }
+
+/* ---------- code entry modal ---------- */
+const codeModal = document.getElementById('codeModal');
+const digits = [document.getElementById('d0'), document.getElementById('d1'), document.getElementById('d2'), document.getElementById('d3')];
+const verifyBtn = document.getElementById('verifyBtn');
+const modalMsg = document.getElementById('modalMsg');
+
+/* Tastatura de pe telefon nu micșorează layout viewport-ul (iOS), deci sheet-ul
+   ar rămâne ascuns în spatele ei. Urmărim visualViewport ca să stea deasupra. */
+const vv = window.visualViewport;
+function syncModalViewport(){
+  if(!vv) return;
+  codeModal.style.height = vv.height + 'px';
+  codeModal.style.top = vv.offsetTop + 'px';
+}
+if(vv){
+  vv.addEventListener('resize', ()=>{ if(codeModal.classList.contains('show')) syncModalViewport(); });
+  vv.addEventListener('scroll', ()=>{ if(codeModal.classList.contains('show')) syncModalViewport(); });
+}
+
+function setMsg(text, kind){
+  modalMsg.textContent = text || ' ';
+  modalMsg.classList.remove('err','warn');
+  if(kind) modalMsg.classList.add(kind);
+}
+
+function openModal(){
+  digits.forEach(d=>{ d.value=''; d.classList.remove('error','success'); });
+  verifyBtn.classList.remove('ready');
+  setMsg('');
+  codeModal.classList.remove('hide');
+  codeModal.classList.add('show');
+  syncModalViewport();
+  setTimeout(()=> digits[0].focus(), 350);
+}
+
+function closeModal(){
+  codeModal.classList.add('hide');
+  digits.forEach(d=> d.blur());
+  setTimeout(()=> codeModal.classList.remove('show','hide'), 280);
+}
+
+function getCode(){ return digits.map(d=>d.value).join(''); }
+function updateVerifyBtn(){ verifyBtn.classList.toggle('ready', getCode().length===4); }
+
+digits.forEach((d,i)=>{
+  d.addEventListener('input', ()=>{
+    d.value = d.value.replace(/[^0-9]/g,'').slice(-1);
+    d.classList.remove('error','success');
+    setMsg('');
+    updateVerifyBtn();
+    if(d.value && i<3){ digits[i+1].focus(); return; }
+    /* a patra cifră → verificăm singuri, fără încă un tap */
+    if(d.value && i===3 && getCode().length===4) setTimeout(submitCode, 140);
+  });
+  d.addEventListener('keydown', (e)=>{
+    if(e.key==='Backspace' && !d.value && i>0){
+      digits[i-1].focus(); digits[i-1].value=''; setMsg(''); updateVerifyBtn();
+    }
+    if(e.key==='Enter'){ e.preventDefault(); if(getCode().length===4) submitCode(); }
+    if(e.key==='Escape'){ e.preventDefault(); closeModal(); }
+  });
+  d.addEventListener('paste', (e)=>{
+    e.preventDefault();
+    const text = (e.clipboardData||window.clipboardData).getData('text').replace(/[^0-9]/g,'');
+    for(let j=0; j<4 && j<text.length; j++) digits[j].value = text[j];
+    setMsg('');
+    updateVerifyBtn();
+    digits[Math.min(text.length, 3)].focus();
+    if(getCode().length===4) setTimeout(submitCode, 140);
+  });
+});
+
+codeModal.addEventListener('click', (e)=>{ if(e.target===codeModal) closeModal(); });
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.addEventListener('keydown', (e)=>{
+  if(e.key==='Escape' && codeModal.classList.contains('show')) closeModal();
+});
+
+function submitCode(){
+  const code = getCode();
+  if(code.length<4) return;
+  const r = collect(code);
+  if(r.ok){
+    setMsg('');
+    digits.forEach(d=> d.classList.add('success'));
+    setTimeout(()=> closeModal(), 350);
+  } else {
+    setMsg(r.msg, r.reason==='dup' ? 'warn' : 'err');
+    digits.forEach(d=> d.classList.add('error'));
+    if(navigator.vibrate) navigator.vibrate([25,35,25]);
+    setTimeout(()=>{
+      digits.forEach(d=>{ d.classList.remove('error'); d.value=''; });
+      verifyBtn.classList.remove('ready');
+      digits[0].focus();
+    }, 550);
+  }
+}
+verifyBtn.addEventListener('click', submitCode);
 
 /* ---------- prize ---------- */
 let clockTimer=null;
 function renderPrize(){
+  document.getElementById('passCount').innerHTML = TOTAL+'<span>/'+TOTAL+'</span>';
   const grid = document.getElementById('proofTiles');
   if(!grid.childElementCount){
     for(let i=0;i<TOTAL;i++){
@@ -481,8 +639,7 @@ const redeemFill = document.getElementById('redeemFill');
 let holdStart=null, holdRaf=null;
 const HOLD_MS = 1800;
 function holdBegin(e){
-  e.preventDefault();
-  holdStart = performance.now();
+  e.preventDefault(); holdStart = performance.now();
   const step = ()=>{
     if(holdStart===null) return;
     const p = Math.min(1,(performance.now()-holdStart)/HOLD_MS);
@@ -500,7 +657,7 @@ function doRedeem(){
   holdEnd();
   state.redeemed = true; state.redeemedAt = new Date().toISOString();
   saveState();
-  if(navigator.vibrate) navigator.vibrate([30,50,30]);
+  if(navigator.vibrate) navigator.vibrate([25,40,25]);
   route();
 }
 
@@ -512,65 +669,6 @@ function renderDone(){
     : 'Premiul a fost înmânat.';
 }
 
-/* ---------- camera ---------- */
-const video = document.getElementById('video');
-let stream=null, scanRaf=null;
-const scanCanvas = document.createElement('canvas');
-const scanCtx = scanCanvas.getContext('2d', {willReadFrequently:true});
-
-async function startCamera(){
-  document.getElementById('camError').style.display='none';
-  try{
-    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-      throw new Error('Browser-ul nu suportă accesul la cameră (necesită HTTPS).');
-    }
-    stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}, audio:false});
-    video.srcObject = stream;
-    await video.play();
-    scanLoop();
-  }catch(e){
-    console.error('Camera error:', e.name, e.message);
-    const errEl = document.getElementById('camError');
-    const errMsg = errEl.querySelector('p');
-    if(e.name === 'NotAllowedError'){
-      errMsg.textContent = 'Accesul la cameră a fost blocat. Apasă pe iconița de lacăt din bara de adrese → permite Camera, apoi reîncarcă pagina.';
-    } else if(e.name === 'NotFoundError'){
-      errMsg.textContent = 'Nu s-a găsit nicio cameră pe acest dispozitiv.';
-    } else {
-      errMsg.textContent = e.message || 'Camera nu poate fi accesată. Poți scana codurile QR direct cu aplicația de cameră a telefonului — linkul te aduce înapoi aici cu punctul adăugat.';
-    }
-    errEl.style.display='flex';
-  }
-}
-function stopCamera(){
-  cancelAnimationFrame(scanRaf);
-  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
-  video.srcObject = null;
-}
-function scanLoop(){
-  scanRaf = requestAnimationFrame(scanLoop);
-  if(video.readyState < 2) return;
-  const w = video.videoWidth, h = video.videoHeight;
-  if(!w||!h) return;
-  const scale = 480/Math.max(w,h);
-  scanCanvas.width = Math.round(w*scale); scanCanvas.height = Math.round(h*scale);
-  scanCtx.drawImage(video,0,0,scanCanvas.width,scanCanvas.height);
-  const img = scanCtx.getImageData(0,0,scanCanvas.width,scanCanvas.height);
-  const qr = jsQR(img.data, img.width, img.height, {inversionAttempts:'dontInvert'});
-  if(qr && qr.data){
-    const code = extractCode(qr.data);
-    if(code){ stopCamera(); show('home'); renderHome(); collect(code); }
-  }
-}
-/* acceptă codul brut sau un URL de forma .../#/c/COD */
-function extractCode(data){
-  data = String(data).trim();
-  const m = data.match(/#\/c\/([A-Za-z0-9-]+)/);
-  if(m) return m[1];
-  if(/^[A-Za-z0-9]+-[A-Za-z0-9]+$/.test(data)) return data;
-  return null;
-}
-
 /* ---------- routing ---------- */
 function route(){
   if(state.redeemed){ show('done'); renderDone(); return; }
@@ -579,33 +677,32 @@ function route(){
 }
 
 function handleHash(){
-  const m = location.hash.match(/^#\/c\/([A-Za-z0-9-]+)/);
+  const m = location.hash.match(/^#\/c\/(\d{4})/);
   if(m){
     history.replaceState(null,'',location.pathname + location.search);
     if(!state.redeemed && state.collected.length<TOTAL){
       renderHome();
-      if(collect(m[1])) return;
+      const r = collect(m[1]);
+      if(r.ok) return;
+      toast(r.msg);
     }
   }
   route();
 }
 
-/* Reset de sesiune — DOAR pentru personal, protejat cu o cheie ca să nu-l poată
-   folosi vizitatorii ca să rejoace. Se accesează ca .../?reset=CHEIE
-   Schimbă cheia înainte de eveniment și n-o pune pe niciun material printat. */
+/* Reset — doar pentru personal: .../?reset=CHEIE */
 if(new URLSearchParams(location.search).get('reset') === RESET_KEY){
-  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  clearState();
   state = emptyState();
   history.replaceState(null,'',location.pathname);
 }
 
 if(!storageOK) document.getElementById('storageBanner').classList.add('show');
 
-document.getElementById('scanBtn').addEventListener('click', ()=>{ show('scan'); startCamera(); });
-document.getElementById('scanClose').addEventListener('click', ()=>{ show('home'); renderHome(); });
-document.getElementById('camErrBack').addEventListener('click', ()=>{ show('home'); renderHome(); });
+document.getElementById('codeBtn').addEventListener('click', ()=>{
+  if(!state.redeemed && state.collected.length<TOTAL) openModal();
+});
 window.addEventListener('hashchange', handleHash);
-
 handleHash();
 </script>
 </body>

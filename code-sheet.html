@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coduri — ONZE Code Hunt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0A;
+    --surface:#141414;
+    --border:rgba(255,255,255,.10);
+    --border-strong:rgba(255,255,255,.20);
+    --text:#F0EDE8;
+    --text-2:rgba(255,255,255,.48);
+    --text-3:rgba(255,255,255,.20);
+    --accent:#FF3D00;
+    --ink:#0A0A0A;
+    --ink-2:rgba(10,10,10,.50);
+    --ink-3:rgba(10,10,10,.28);
+    --ease:cubic-bezier(.16,1,.3,1);
+    --font:'Space Grotesk',system-ui,-apple-system,sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:var(--font);
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; letter-spacing:-.01em;}
+  button{font-family:inherit; cursor:pointer;}
+
+  /* ---------- controls (screen only) ---------- */
+  .controls{max-width:600px; margin:0 auto; padding:48px 20px 8px;}
+  .controls .logo{display:flex; align-items:flex-end; gap:14px; margin-bottom:28px;}
+  .controls .logo svg{width:auto; height:52px; color:var(--text); display:block;}
+  .controls .logo span{font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--text-3); padding-bottom:4px;}
+  .controls h1{font-size:34px; font-weight:700; letter-spacing:-.04em; line-height:1.05;}
+  .controls .lede{font-size:14px; line-height:1.5; color:var(--text-2); margin:10px 0 24px;}
+
+  .panel{border:1px solid var(--border); background:var(--surface);}
+  .field{display:flex; align-items:center; gap:14px; padding:16px 18px;}
+  .field + .field{border-top:1px solid var(--border);}
+  .field label{font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--text-2); width:82px; flex:none;}
+  .field input{flex:1; border:none; outline:none; font:inherit; font-size:15px; font-weight:500;
+    color:var(--text); background:transparent; min-width:0;}
+  .field input::placeholder{color:var(--text-3);}
+
+  .actions{display:flex; gap:10px; margin-top:16px;}
+  .btn{flex:1; border:none; padding:17px 20px; font-size:14px; font-weight:700;
+    letter-spacing:.06em; text-transform:uppercase; font-family:inherit;
+    transition:transform .2s var(--ease), opacity .15s ease;}
+  .btn:active{transform:scale(.98); opacity:.85;}
+  .btn-primary{background:var(--accent); color:#fff;}
+  .btn-plain{background:transparent; color:var(--accent); border:1px solid var(--accent);}
+  .hint{font-size:12px; line-height:1.5; color:var(--text-3); margin-top:18px;}
+  .hint b{font-weight:700; color:var(--text-2);}
+
+  /* ---------- printable cards ---------- */
+  .cards{display:flex; flex-direction:column; align-items:center; gap:24px; padding:36px 20px 80px;}
+  .card{width:600px; max-width:100%; background:#fff; color:var(--ink);
+    padding:56px 48px 44px; text-align:center;
+    page-break-after:always; break-after:page;}
+
+  .card-logo{display:flex; justify-content:center;}
+  .card-logo svg{width:auto; height:96px; color:var(--ink); display:block;}
+
+  .card-model{font-size:13px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--ink-2); margin-top:40px;}
+  .card-num{font-size:76px; font-weight:700; letter-spacing:-.05em; line-height:1; margin-top:6px;}
+  .card-of{font-size:13px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-3); margin-top:8px;}
+
+  .code-label{font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--ink-2); margin-top:44px;}
+  .code-row{display:flex; justify-content:center; gap:12px; margin-top:14px;}
+  .code-digit{width:96px; height:120px; border:3px solid var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    font-size:64px; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.03em;
+    color:var(--ink);}
+
+  .card-cta{font-size:24px; font-weight:700; letter-spacing:-.03em; line-height:1.2; margin-top:44px;}
+  .card-sub{font-size:14px; line-height:1.5; color:var(--ink-2); margin-top:10px;}
+
+  .steps{display:flex; justify-content:center; gap:8px; margin-top:26px; flex-wrap:wrap;}
+  .step{border:1px solid rgba(10,10,10,.14); padding:10px 16px; font-size:12px; font-weight:600;
+    letter-spacing:.02em; color:var(--ink-2);}
+  .step.accent{background:var(--accent); border-color:var(--accent); color:#fff; font-weight:700;}
+
+  .card-url{font-size:18px; font-weight:700; letter-spacing:-.01em; margin-top:34px; word-break:break-all;}
+  .card-url-label{font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--ink-3); margin-top:34px;}
+
+  @media print{
+    @page{ size:A4; margin:14mm; }
+    body{background:#fff;}
+    .controls{display:none;}
+    .cards{padding:0; gap:0;}
+    .card{width:100%; max-width:none; padding:0;
+      height:calc(100vh - 28mm);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;}
+    .card:last-child{page-break-after:auto; break-after:auto;}
+    .code-digit{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .step.accent{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <div class="logo">
+    <svg viewBox="0 0 100 189" fill="currentColor" role="img" aria-label="ONZE">
+      <path d="m31.38 36.73c0-6.05 4.69-9.46 9.6-9.37h0.53v-21.56h-2.15v-2.86c0-0.73 0.44-1.53 0.89-1.61h-19.84c-6.79 0-10.52 3.77-11.16 8.75v133c-0.13 4.71-4.81 8.44-7.15 9.24h35.12c-2.3-1.17-5.89-3.78-5.89-9.19l0.05-106.4z"/>
+      <path d="m68.84 36.73c0-5.32-4.28-9.47-9.7-9.37h-0.63v-21.56h2.5v-2.6c0-0.88-0.49-1.61-0.84-1.87h19.75c6.7 0 10.35 4.16 10.35 9.14v132.6c0.13 4.37 3.91 7.76 7.51 9.24h-35.26c3.73-1.92 6.27-5.09 6.27-9.2l0.05-106.4z"/>
+      <path d="m15.77 160.3c8.19 1.13 11.32 7.87 11.32 13.02 0 6.8-3.6 13.81-12.16 13.81-8.17 0.56-13.32-4.66-13.32-14.14 0-5.88 3.95-13.61 14.16-12.69zm-0.58 5.91c-4.16-0.95-5.23 4.91-5.27 6.71-0.13 3.3 0.83 7.95 4.63 7.95 3.95 0 4.73-5.06 4.62-7.44-0.14-2.67-1.08-6.48-3.98-7.22z"/>
+      <path d="m29.7 160.4h6.79l9.99 13.59v-13.59h7.6v26.39h-7.76l-9.62-15v15h-7v-26.39z"/>
+      <path d="m57.21 160.4h18.59v5.03l-10.68 15.13h11.17v6.23h-19.05v-5.37l11.52-15.57h-11.55v-5.45z"/>
+      <path d="m78.96 160.4h18.01v5.67h-10.88v4.1h8.57v5.41h-8.57v4.73h10.77v6.48h-17.9v-26.39z"/>
+    </svg>
+    <span>Code Hunt</span>
+  </div>
+
+  <h1>Coduri — cele 5 modele</h1>
+  <p class="lede">O foaie A4 pentru fiecare model, cu codul lui de 4 cifre. Codurile sunt luate din aceeași listă ca în <code>index.html</code> — dacă le schimbi acolo, schimbă-le și aici.</p>
+
+  <div class="panel">
+    <div class="field"><label for="baseUrl">Adresă</label><input id="baseUrl" placeholder="https://exemplu.vercel.app/"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-plain" onclick="gen()">Generează</button>
+    <button class="btn btn-primary" onclick="window.print()">Printează</button>
+  </div>
+
+  <p class="hint"><b>Înainte de print:</b> hârtie groasă, mată. În dialogul de printare bifează „Background graphics" / „Grafică de fundal", altfel chenarele portocalii ale cifrelor nu se văd.</p>
+</div>
+
+<div class="cards" id="cards"></div>
+
+<script>
+/* ================= CONFIG =================
+   Trebuie să fie identice cu MODEL_CODES din index.html.
+   Modelul N primește codul de pe poziția N din listă.        */
+const MODEL_CODES = ['4829','7135','9261','3507','6843'];
+/* ========================================== */
+
+const TOTAL = MODEL_CODES.length;
+
+const LOGO =
+  '<svg viewBox="0 0 100 189" fill="currentColor" role="img" aria-label="ONZE">'+
+  '<path d="m31.38 36.73c0-6.05 4.69-9.46 9.6-9.37h0.53v-21.56h-2.15v-2.86c0-0.73 0.44-1.53 0.89-1.61h-19.84c-6.79 0-10.52 3.77-11.16 8.75v133c-0.13 4.71-4.81 8.44-7.15 9.24h35.12c-2.3-1.17-5.89-3.78-5.89-9.19l0.05-106.4z"/>'+
+  '<path d="m68.84 36.73c0-5.32-4.28-9.47-9.7-9.37h-0.63v-21.56h2.5v-2.6c0-0.88-0.49-1.61-0.84-1.87h19.75c6.7 0 10.35 4.16 10.35 9.14v132.6c0.13 4.37 3.91 7.76 7.51 9.24h-35.26c3.73-1.92 6.27-5.09 6.27-9.2l0.05-106.4z"/>'+
+  '<path d="m15.77 160.3c8.19 1.13 11.32 7.87 11.32 13.02 0 6.8-3.6 13.81-12.16 13.81-8.17 0.56-13.32-4.66-13.32-14.14 0-5.88 3.95-13.61 14.16-12.69zm-0.58 5.91c-4.16-0.95-5.23 4.91-5.27 6.71-0.13 3.3 0.83 7.95 4.63 7.95 3.95 0 4.73-5.06 4.62-7.44-0.14-2.67-1.08-6.48-3.98-7.22z"/>'+
+  '<path d="m29.7 160.4h6.79l9.99 13.59v-13.59h7.6v26.39h-7.76l-9.62-15v15h-7v-26.39z"/>'+
+  '<path d="m57.21 160.4h18.59v5.03l-10.68 15.13h11.17v6.23h-19.05v-5.37l11.52-15.57h-11.55v-5.45z"/>'+
+  '<path d="m78.96 160.4h18.01v5.67h-10.88v4.1h8.57v5.41h-8.57v4.73h10.77v6.48h-17.9v-26.39z"/>'+
+  '</svg>';
+
+document.getElementById('baseUrl').value =
+  location.origin + location.pathname.replace(/code-sheet\.html$/,'');
+
+function gen(){
+  let base = document.getElementById('baseUrl').value.trim();
+  if(!base){ alert('Pune adresa aplicației'); return; }
+  if(!/\/$/.test(base) && !/\.html$/.test(base)) base += '/';
+
+  const pretty = base.replace(/^https?:\/\//,'').replace(/\/$/,'');
+  const wrap = document.getElementById('cards');
+  wrap.innerHTML = '';
+
+  MODEL_CODES.forEach((code,i)=>{
+    const digits = code.split('').map(d => '<div class="code-digit">'+d+'</div>').join('');
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML =
+      '<div class="card-logo">'+LOGO+'</div>'+
+      '<div class="card-model">Model</div>'+
+      '<div class="card-num">'+String(i+1).padStart(2,'0')+'</div>'+
+      '<div class="card-of">din '+TOTAL+'</div>'+
+      '<div class="code-label">Codul acestui model</div>'+
+      '<div class="code-row">'+digits+'</div>'+
+      '<div class="card-cta">Introdu codul și primești 1 punct</div>'+
+      '<div class="card-sub">Deschide pagina pe telefon, apasă „Introdu codul" și tastează cifrele de mai sus.</div>'+
+      '<div class="steps">'+
+        '<span class="step">'+TOTAL+' modele în magazin</span>'+
+        '<span class="step accent">'+TOTAL+' puncte = premiu la casă</span>'+
+      '</div>'+
+      '<div class="card-url-label">Deschide pe telefon</div>'+
+      '<div class="card-url">'+pretty+'</div>';
+    wrap.appendChild(card);
+  });
+}
+gen();
+</script>
+</body>
+</html>
